@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Last ned pdf-en</h2>
+        <p>
+            PDF-en er lastet opp, og vi fikk tilbake id: @ViewBag.documentId  Vi kan nå signere den ...
+        </p>
+        <p><a class="btn btn-default" href="/Home/Sign?did=@ViewBag.documentId">Signer</a></p>
+    </div>
+</div>
