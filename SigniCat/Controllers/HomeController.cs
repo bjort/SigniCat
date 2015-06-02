@@ -52,7 +52,7 @@ namespace SigniCat.Controllers
         {
             try
             {
-                SigniCat.download_document_from_SDS( did, Server.MapPath( "/testpage2.pdf" ) );
+                SigniCat.download_document_from_SDS( did, Server.MapPath( "/downloaded.pdf" ) );
                 ViewBag.result = "Success";
             }
             catch( Exception e )

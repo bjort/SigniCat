@@ -7,8 +7,9 @@
     <div class="col-md-12">
         <h2>Last ned pdf-en</h2>
         <p>
-            PDF-en er lastet opp, og vi fikk tilbake id: @ViewBag.documentId  Vi kan nå signere den ...
+            PDF-en er lastet opp, og vi fikk tilbake id som er gyldig i 30 minutter:<br />id:<strong>@ViewBag.documentId</strong> <br />
+            Med denne id-en kan vi signere eller laste den ned igjen.
         </p>
-        <p><a class="btn btn-default" href="/Home/Sign?did=@ViewBag.documentId">Signer</a></p>
+        <p><a class="btn btn-default" href="/Home/Sign?did=@ViewBag.documentId">Signer</a>  <a class="btn btn-default" href="/Home/Download?did=@ViewBag.documentId">Last ned</a></p>
     </div>
 </div>
