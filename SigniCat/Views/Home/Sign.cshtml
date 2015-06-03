@@ -4,6 +4,8 @@
 }
 
 <h2>Sign</h2>
-En feil må ha oppstått!<br />
-Du skulle blitt redirigert til en BankID-side! <br />
-Feilmelding: @ViewBag.result
+
+Signer i nytt vindu: <a href="https://preprod.signicat.com/std/docaction/shared?request_id=@Html.Raw( ViewBag.requestId)&task_id=task_1" target="_blank">https://preprod.signicat.com/std/docaction/shared?request_id=@Html.Raw( ViewBag.requestId )&task_id=task_1</a><br />
+Last så ned signert dokument: <a class="btn btn-default" href="/Home/DownloadSigned?did=@ViewBag.requestId">Last ned signert</a><br /><br />
+
+Resultat: @ViewBag.result

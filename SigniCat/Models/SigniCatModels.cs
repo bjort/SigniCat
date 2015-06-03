@@ -1,4 +1,5 @@
 ﻿using SigniCat.ServiceReference1;
+using SigniCat.ServiceReference2;
 using System.IO;
 /*using System.Net;
 using System.Net.Http;
@@ -8,8 +9,15 @@ using System.Net;
 
 namespace SigniCat.Models
 {
+
     public class SigniCatModels
     {
+        private string passwd = "Bond007";
+        private string service = "shared";
+        private string taskid =  "task_1";
+        private string docid  =  "doc_1";
+        private string subid  = "sub_1";
+
         public string upload_document_to_SDS( string path )
         {
             byte[] document = File.ReadAllBytes( path );
@@ -18,24 +26,23 @@ namespace SigniCat.Models
             {
                 webClient.Credentials = new NetworkCredential("shared", "Bond007");
                 webClient.Headers.Add( "Content-Type", "application/pdf" );
-                //byte[] document = webClient.DownloadData(path);
                 byte[] response = webClient.UploadData( "https://preprod.signicat.com/doc/shared/sds", "POST", document );
                 return System.Text.Encoding.Default.GetString( response );
             }
-                //Assert.AreEqual( HttpStatusCode.Created, response.StatusCode );
-                //Assert.IsTrue( documentId.Length > 0 );
         }
 
-        public string get_sign_url_from_SDS( string did )
+        public string get_requestId_from_SDS( string did )
         {
             createrequestrequest request = new createrequestrequest
             {
-                password = "Bond007",
-                service = "shared",
+                password = passwd,
+                service = service,                
                 request = new request[]
                  {
+                     
                      new request
                      {
+                         
                          clientreference = "cliref1",
                          language = "nb",
                          profile = "default",
@@ -43,7 +50,7 @@ namespace SigniCat.Models
                          {
                              new sdsdocument
                              {
-                                 id = "doc_1", /* must match the documentaction in "task_1" further down */
+                                 id = docid, 
                                  refsdsid = did,
                                  description = "Terms and conditions"
 
@@ -53,24 +60,34 @@ namespace SigniCat.Models
                          {
                              new subject
                              {
-                                 id = "subj_1", /* must match the subjectref in "task_1" further down */
-                                 nationalid = "1909740939" /* en kode vi bestemmer - f.eks. personnr */
+                                 id = subid, 
+                                 nationalid = "02082213530" /* Brukerens personnr */
                              }
-                         },
-                         task = new task[]
+                         }/*,
+                        notification = new notification[]
+                        {
+                            new notification
+                            {
+                                type = notificationtype.URL,
+                                notificationid = "not_1",
+                                message = "don't give up!",
+                                recipient = "http://campus.inkrement.no/Show/ShowNode/"
+                            }
+                        }*/,
+                        task = new task[]
                          {
                              new task
                              {
                                 bundle = false,
                                 bundleSpecified = true,
-                                id = "task_1",
-                                 subjectref = "subj_1",
+                                id = taskid,
+                                 subjectref = subid,
                                  documentaction = new documentaction[]
                                  {
                                       new documentaction
                                       {
                                           type = documentactiontype.sign,
-                                          documentref = "doc_1"
+                                          documentref = docid
                                       }
                                  },
 
@@ -83,22 +100,53 @@ namespace SigniCat.Models
                                              "nbid-sign"
                                          }
                                      }
-                                 }
+                                 },
+                                 notification = new notification[]{
+                                        new notification
+                                        {
+                                            type = notificationtype.URL,
+                                            notificationid = "not_2",
+                                            message = "don't give up!",
+                                            recipient = "http://campus.inkrement.no/Show/ShowNode/",
+                                            schedule = new schedule[]
+                                            {
+                                                 new schedule
+                                                 {
+                                                     stateis = taskstatus.completed
+                                                 }
+                                            }
+
+                                        }
+                                  /*  new notification
+                                    {
+                                         header = "Attention required",
+                                         message = "There are documents waiting for you to sign them. Please visit ${taskUrl}.",
+                                         notificationid = "req_not_2",
+                                         recipient = "bjorn.ove.thue@gmail.com",
+                                         sender = "bjorn.thue@inkrement.no",
+                                         type = notificationtype.EMAIL,
+                                         schedule = new schedule[]
+                                         {
+                                             new schedule
+                                             {
+                                                 stateis = taskstatus.completed
+                                             }
+                                         }
+                                    }*/
+                                 }                                   
                              }
                          }
                      }
                  }
             };
 
+            
             createrequestresponse response;
             using( var client = new DocumentEndPointClient() )
             {
                 response = client.createRequest( request );
             }
-            string signHereUrl = 
-                string.Format( "https://preprod.signicat.com/std/docaction/shared?request_id={0}&task_id={1}", response.requestid[ 0 ], request.request[ 0 ].task[ 0 ].id );
-
-            return signHereUrl;
+            return response.requestid[ 0 ];
 
             //Assert.AreEqual( HttpStatusCode.Created, response.StatusCode );
             //Assert.IsTrue( documentId.Length > 0 );
@@ -108,12 +156,65 @@ namespace SigniCat.Models
         {
             using( var webClient = new WebClient() )
             {
-                webClient.Credentials = new NetworkCredential( "shared", "Bond007" );
+                webClient.Credentials = new NetworkCredential(  service, passwd );
                 byte[] document = webClient.DownloadData( "https://preprod.signicat.com/doc/shared/sds/" + did );
                 File.WriteAllBytes( path, document );
             }
             //Assert.AreEqual( HttpStatusCode.Created, response.StatusCode );
             //Assert.IsTrue( documentId.Length > 0 );
+        }
+
+        public string get_url_to_signed_doc( string did )
+        {
+            string requestId = did;
+            string originalUri = null;
+            string resultUri = null;
+
+            using( var client = new DocumentEndPointClient() )
+            {
+                var request = new getstatusrequest
+                {
+                    password = passwd,
+                    service = service,
+                    requestid = new string[]
+                    {
+                        requestId
+                    }
+                };
+
+                var taskStatusInfo = client.getStatus( request );
+
+                if( taskStatusInfo.Length != 1 ) throw new System.Exception( "Oppgaven har ingen status!" );
+                if( taskstatus.completed != taskStatusInfo[ 0 ].taskstatus ) throw new System.Exception( "Oppgaven har ikke status 'complete'!" );
+                if( taskStatusInfo[ 0 ].documentstatus[ 0 ].id != docid ) throw new System.Exception( "Feil dokument id: " + taskStatusInfo[ 0 ].documentstatus[ 0 ].id + " != " + docid ); 
+
+                originalUri = string.Format( "https://preprod.signicat.com/doc/shared/order/{0}/{1}/{2}/original", requestId, taskid, docid );
+                resultUri = string.Format( "https://preprod.signicat.com/doc/shared/order/{0}/{1}/{2}/sdo", requestId, taskid, docid );
+            }
+
+            using (var client = new PackagingEndPointClient())
+            {
+                var request = new createpackagerequest
+                {
+                    service = service,
+                    password = passwd,
+                    version = "2",
+                    packagingmethod = "pades",
+                    validationpolicy =  "ltvsdo-validator",
+                    sdo = new documentid[]
+                    {
+                        new documentid
+                        {
+                            uridocumentid = resultUri
+                        }
+                    }
+                };
+ 
+                var createPackageResponse = client.createpackage(request);
+                string padesDocumentId = createPackageResponse.id;
+                string padesDownloadUrl = "https://preprod.signicat.com/doc/shared/sds/" + padesDocumentId;
+                return padesDownloadUrl;
+            }
         }
     }
 }

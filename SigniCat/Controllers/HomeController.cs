@@ -35,9 +35,10 @@ namespace SigniCat.Controllers
         {
             try
             {
-                string redirecturl = SigniCat.get_sign_url_from_SDS( did );
-                Response.Redirect( redirecturl );
-                ViewBag.result = "Feil! Ble ikke redirigert!";
+                //string redirecturl = SigniCat.get_sign_url_from_SDS( did );
+                string requestid = SigniCat.get_requestId_from_SDS( did );
+                ViewBag.requestId = requestid;
+                ViewBag.result = "Success!";
 
             }
             catch( Exception e )
@@ -54,6 +55,22 @@ namespace SigniCat.Controllers
             {
                 SigniCat.download_document_from_SDS( did, Server.MapPath( "/downloaded.pdf" ) );
                 ViewBag.result = "Success";
+            }
+            catch( Exception e )
+            {
+                ViewBag.result = e.Message;
+            }
+
+            return View();
+        }
+
+        public ActionResult DownloadSigned( string did )
+        {
+            try
+            {
+                string url = SigniCat.get_url_to_signed_doc( did );
+                ViewBag.result = "Feil! Ble ikke redirigert!";
+                Response.Redirect( url );
             }
             catch( Exception e )
             {
