@@ -80,6 +80,9 @@ namespace SigniCat.Models
                              {
                                 bundle = false,
                                 bundleSpecified = true,
+                                ontaskcomplete = "http://campus.inkrement.no/Show/SaveAnswer?nodeId=1652928&ans=SigniCat&score=null&userId=0&courseId=90530",
+                                ontaskcancel = "",
+                                ontaskpostpone = "",
                                 id = taskid,
                                  subjectref = subid,
                                  documentaction = new documentaction[]
@@ -97,10 +100,10 @@ namespace SigniCat.Models
                                      {
                                          method = new string[]
                                          {
-                                             "nbid-sign"
+                                             "nbid-ltv-sign"
                                          }
                                      }
-                                 },
+                                 }/*,
                                  notification = new notification[]{
                                         new notification
                                         {
@@ -117,23 +120,7 @@ namespace SigniCat.Models
                                             }
 
                                         }
-                                  /*  new notification
-                                    {
-                                         header = "Attention required",
-                                         message = "There are documents waiting for you to sign them. Please visit ${taskUrl}.",
-                                         notificationid = "req_not_2",
-                                         recipient = "bjorn.ove.thue@gmail.com",
-                                         sender = "bjorn.thue@inkrement.no",
-                                         type = notificationtype.EMAIL,
-                                         schedule = new schedule[]
-                                         {
-                                             new schedule
-                                             {
-                                                 stateis = taskstatus.completed
-                                             }
-                                         }
-                                    }*/
-                                 }                                   
+                                 }                                   */
                              }
                          }
                      }
@@ -198,7 +185,7 @@ namespace SigniCat.Models
                 {
                     service = service,
                     password = passwd,
-                    version = "2",
+                    version = "1",
                     packagingmethod = "pades",
                     validationpolicy =  "ltvsdo-validator",
                     sdo = new documentid[]

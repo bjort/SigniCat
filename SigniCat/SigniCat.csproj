@@ -327,6 +327,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Views\Home\Sign.cshtml" />
+    <Content Include="Views\Home\DownloadSigned.cshtml" />
     <None Include="Service References\ServiceReference2\PackagingService.wsdl" />
     <Content Include="Service References\ServiceReference2\SigniCat.ServiceReference2.createpackageresponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -334,7 +335,6 @@
     <Content Include="Service References\ServiceReference2\SigniCat.ServiceReference2.createpackageResponse1.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Views\Home\DownloadSigned.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

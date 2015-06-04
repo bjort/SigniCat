@@ -12,7 +12,7 @@ namespace SigniCat.ServiceReference2 {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v2", ConfigurationName="ServiceReference2.PackagingEndPoint")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v1", ConfigurationName="ServiceReference2.PackagingEndPoint")]
     public interface PackagingEndPoint {
         
         // CODEGEN: Generating message contract since the operation create-package is neither RPC nor document wrapped.
@@ -29,7 +29,7 @@ namespace SigniCat.ServiceReference2 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v2")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v1")]
     public partial class createpackagerequest : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string versionField;
@@ -131,7 +131,7 @@ namespace SigniCat.ServiceReference2 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName="document-id", Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v2")]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="document-id", Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v1")]
     public partial class documentid : object, System.ComponentModel.INotifyPropertyChanged {
         
         private archivedocumentid archivedocumentidField;
@@ -205,7 +205,7 @@ namespace SigniCat.ServiceReference2 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName="archive-document-id", Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v2")]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="archive-document-id", Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v1")]
     public partial class archivedocumentid : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string idField;
@@ -237,7 +237,7 @@ namespace SigniCat.ServiceReference2 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v2")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v1")]
     public partial class error : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string codeField;
@@ -283,7 +283,7 @@ namespace SigniCat.ServiceReference2 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName="sds-document-id", Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v2")]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="sds-document-id", Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v1")]
     public partial class sdsdocumentid : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string idField;
@@ -315,7 +315,7 @@ namespace SigniCat.ServiceReference2 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName="order-document-id", Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v2")]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="order-document-id", Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v1")]
     public partial class orderdocumentid : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string requestidField;
@@ -324,7 +324,7 @@ namespace SigniCat.ServiceReference2 {
         
         private string documentidField;
         
-        private System.Nullable<orderdocumenttype> typeField;
+        private orderdocumenttype typeField;
         
         public orderdocumentid() {
             this.typeField = orderdocumenttype.result;
@@ -367,8 +367,9 @@ namespace SigniCat.ServiceReference2 {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=3)]
-        public System.Nullable<orderdocumenttype> type {
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        [System.ComponentModel.DefaultValueAttribute(orderdocumenttype.result)]
+        public orderdocumenttype type {
             get {
                 return this.typeField;
             }
@@ -391,7 +392,7 @@ namespace SigniCat.ServiceReference2 {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName="order-document-type", Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v2")]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="order-document-type", Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v1")]
     public enum orderdocumenttype {
         
         /// <remarks/>
@@ -406,7 +407,7 @@ namespace SigniCat.ServiceReference2 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v2")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v1")]
     public partial class createpackageresponse : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string idField;
@@ -453,7 +454,7 @@ namespace SigniCat.ServiceReference2 {
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class createpackage {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="create-package-request", Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v2", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="create-package-request", Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v1", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute("create-package-request")]
         public SigniCat.ServiceReference2.createpackagerequest createpackagerequest;
         
@@ -471,7 +472,7 @@ namespace SigniCat.ServiceReference2 {
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class createpackageResponse1 {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="create-package-response", Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v2", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="create-package-response", Namespace="https://id.signicat.com/definitions/wsdl/Packaging-v1", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute("create-package-response")]
         public SigniCat.ServiceReference2.createpackageresponse createpackageresponse;
         
