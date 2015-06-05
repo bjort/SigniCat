@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="https://id.signicat.com/definitions/wsdl/Packaging-v1" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="PackagingService" targetNamespace="https://id.signicat.com/definitions/wsdl/Packaging-v1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="https://id.signicat.com/definitions/wsdl/Packaging-v2" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="PackagingService" targetNamespace="https://id.signicat.com/definitions/wsdl/Packaging-v2" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
-    <xs:schema elementFormDefault="qualified" targetNamespace="https://id.signicat.com/definitions/wsdl/Packaging-v1" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:schema elementFormDefault="qualified" targetNamespace="https://id.signicat.com/definitions/wsdl/Packaging-v2" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:element name="create-package-request">
         <xs:complexType>
           <xs:sequence>
@@ -40,7 +40,7 @@
           <xs:element name="request-id" type="xs:string" />
           <xs:element minOccurs="0" name="task-id" type="xs:string" />
           <xs:element name="document-id" type="xs:string" />
-          <xs:element minOccurs="0" default="result" name="type" type="tns:order-document-type" />
+          <xs:element default="result" name="type" nillable="true" type="tns:order-document-type" />
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="sds-document-id">
@@ -62,11 +62,11 @@
       </xs:simpleType>
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name="create-packageResponse">
-    <wsdl:part name="response" element="tns:create-package-response" />
-  </wsdl:message>
   <wsdl:message name="create-package">
     <wsdl:part name="request" element="tns:create-package-request" />
+  </wsdl:message>
+  <wsdl:message name="create-packageResponse">
+    <wsdl:part name="response" element="tns:create-package-response" />
   </wsdl:message>
   <wsdl:portType name="PackagingEndPoint">
     <wsdl:operation name="create-package">
@@ -88,7 +88,7 @@
   </wsdl:binding>
   <wsdl:service name="PackagingService">
     <wsdl:port name="PackagingEndPointImplPort" binding="tns:PackagingServiceSoapBinding">
-      <soap:address location="https://preprod.signicat.com/ws/packagingservice-v1" />
+      <soap:address location="https://preprod.signicat.com/ws/packagingservice-v2" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

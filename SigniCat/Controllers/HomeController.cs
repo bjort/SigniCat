@@ -68,9 +68,8 @@ namespace SigniCat.Controllers
         {
             try
             {
-                string url = SigniCat.get_url_to_signed_doc( did );
-                ViewBag.result = "Feil! Ble ikke redirigert!";
-                Response.Redirect( url );
+                SigniCat.downloadAndSignDoc( did, Server.MapPath( "/signed.pdf" ) );
+                ViewBag.result = "Dokumentet er lagret!";
             }
             catch( Exception e )
             {

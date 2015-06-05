@@ -61,26 +61,16 @@ namespace SigniCat.Models
                              new subject
                              {
                                  id = subid, 
-                                 nationalid = "02082213530" /* Brukerens personnr */
+                                 nationalid = "02082213530" /* Brukerens personnr. Hvis blank, må bruker oppgi. */
                              }
-                         }/*,
-                        notification = new notification[]
-                        {
-                            new notification
-                            {
-                                type = notificationtype.URL,
-                                notificationid = "not_1",
-                                message = "don't give up!",
-                                recipient = "http://campus.inkrement.no/Show/ShowNode/"
-                            }
-                        }*/,
+                         },
                         task = new task[]
                          {
                              new task
                              {
                                 bundle = false,
                                 bundleSpecified = true,
-                                ontaskcomplete = "http://campus.inkrement.no/Show/SaveAnswer?nodeId=1652928&ans=SigniCat&score=null&userId=0&courseId=90530",
+                                ontaskcomplete = "http://campus.inkrement.no",
                                 ontaskcancel = "",
                                 ontaskpostpone = "",
                                 id = taskid,
@@ -103,24 +93,7 @@ namespace SigniCat.Models
                                              "nbid-ltv-sign"
                                          }
                                      }
-                                 }/*,
-                                 notification = new notification[]{
-                                        new notification
-                                        {
-                                            type = notificationtype.URL,
-                                            notificationid = "not_2",
-                                            message = "don't give up!",
-                                            recipient = "http://campus.inkrement.no/Show/ShowNode/",
-                                            schedule = new schedule[]
-                                            {
-                                                 new schedule
-                                                 {
-                                                     stateis = taskstatus.completed
-                                                 }
-                                            }
-
-                                        }
-                                 }                                   */
+                                 }
                              }
                          }
                      }
@@ -151,11 +124,12 @@ namespace SigniCat.Models
             //Assert.IsTrue( documentId.Length > 0 );
         }
 
-        public string get_url_to_signed_doc( string did )
+        public void downloadAndSignDoc( string did, string path )
         {
             string requestId = did;
             string originalUri = null;
             string resultUri = null;
+            string padesDownloadUrl = null;
 
             using( var client = new DocumentEndPointClient() )
             {
@@ -185,22 +159,29 @@ namespace SigniCat.Models
                 {
                     service = service,
                     password = passwd,
-                    version = "1",
+                    version = "2",
                     packagingmethod = "pades",
                     validationpolicy =  "ltvsdo-validator",
                     sdo = new documentid[]
                     {
                         new documentid
                         {
-                            uridocumentid = resultUri
+                            uridocumentid = resultUri,
                         }
                     }
                 };
- 
+
+
                 var createPackageResponse = client.createpackage(request);
                 string padesDocumentId = createPackageResponse.id;
-                string padesDownloadUrl = "https://preprod.signicat.com/doc/shared/sds/" + padesDocumentId;
-                return padesDownloadUrl;
+                padesDownloadUrl = "https://preprod.signicat.com/doc/shared/sds/" + padesDocumentId;
+            }
+
+            using( var webClient = new WebClient() )
+            {
+                webClient.Credentials = new NetworkCredential( service, passwd );
+                byte[] document = webClient.DownloadData( padesDownloadUrl );
+                File.WriteAllBytes( path, document );
             }
         }
     }

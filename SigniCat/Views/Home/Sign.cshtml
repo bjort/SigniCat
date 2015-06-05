@@ -5,7 +5,6 @@
 
 <h2>Sign</h2>
 
-Signer i nytt vindu: <a href="https://preprod.signicat.com/std/docaction/shared?request_id=@Html.Raw( ViewBag.requestId)&task_id=task_1" target="_blank">https://preprod.signicat.com/std/docaction/shared?request_id=@Html.Raw( ViewBag.requestId )&task_id=task_1</a><br />
-Last så ned signert dokument: <a class="btn btn-default" href="/Home/DownloadSigned?did=@ViewBag.requestId">Last ned signert</a><br /><br />
-
-Resultat: @ViewBag.result
+Du kan nå signere dokumentet: <a href="https://preprod.signicat.com/std/docaction/shared?request_id=@Html.Raw( ViewBag.requestId)&task_id=task_1" target="_blank">Sign here</a><br />
+Etterpå kan du laste den ned <a href="/Home/DownloadSigned?did=@Html.Raw( ViewBag.requestId)">her.</a><br />
+   resultat @ViewBag.result
